@@ -30,10 +30,14 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Aktuelles Verzeichnis ansehen
-              run: pwd && ls -al
+              run: pwd && ls -al && echo $STEP_MESSAGE
 
-            - name: JavaScript ausführen
-              run: node hello-world.js
+            - name: Lade hello-world.js als Artifact hoch
+              uses: actions/upload-artifact@v4
+              with:
+                name: hello-world.js datei
+                path: hello-world.js
+
 
     say-goodbye:
         name: Abschied
@@ -48,6 +52,17 @@ jobs:
 
             - name: Aktuelles Verzeichnis ansehen
               run: pwd && ls -al
+
+            - name: Lade hello-world.js als Artifact herunter
+              uses: actions/download-artifact@v4
+              with:
+                name: hello-world.js datei
+                
+            - name: Aktuelles Verzeichnis ansehen
+              run: pwd && ls -al
+
+            - name: JavaScript ausführen
+              run: node hello-world.js
 
             - name: Abschied ausgabe
               run: echo "Bye bye"
